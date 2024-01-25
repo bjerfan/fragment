@@ -52,7 +52,141 @@
         const address = inputUrl.split('@')[1].split(':')[0];
         const port = parseInt(inputUrl.split('@')[1].split(':')[1].split('?')[0]);
         
-        constoutput={dns:{hosts:{"domain:googleapis.cn":"googleapis.com"},servers:["1.1.1.1"]},inbounds:[{listen:"127.0.0.1",port:10808,protocol:"socks",settings:{auth:"noauth",udp:true,userLevel:8},sniffing:{destOverride:["http","tls"],enabled:true},tag:"socks"},{listen:"127.0.0.1",port:10809,protocol:"http",settings:{userLevel:8},tag:"http"}],log:{loglevel:"warning"},outbounds:[{mux:{concurrency:8,enabled:false},protocol:"vless",settings:{vnext:[{address:address,port:port,users:[{encryption:searchParams.get("encryption"),flow:"",id:id,level:8,security:"auto"}]}]},streamSettings:{network:searchParams.get("type"),security:searchParams.get("security"),tlsSettings:{allowInsecure:false,alpn:[searchParams.get("alpn")],fingerprint:searchParams.get("fp"),publicKey:"",serverName:searchParams.get("sni"),shortId:"",show:false,spiderX:""},wsSettings:{headers:{Host:searchParams.get("host")},path:searchParams.get("path")}},proxySettings:{tag:"fragment",transportLayer:true},tag:"proxy"},{protocol:"freedom",settings:{},tag:"direct"},{protocol:"freedom",tag:"fragment",domainStrategy:"UseIP",sniffing:{enabled:true,destOverride:["http","tls"]},settings:{fragment:{packets:"tlshello",length:"200-500",interval:"10-20"}},streamSettings:{sockopt:{tcpNoDelay:true,domainStrategy:"UseIP"}}},{protocol:"blackhole",settings:{response:{type:"http"}},tag:"block"}],routing:{domainStrategy:"IPIfNonMatch",rules:[{ip:["1.1.1.1"],outboundTag:"proxy",port:"53",type:"field"}]}};
+        const output = {
+            dns: {
+                hosts: {
+                    "domain:googleapis.cn": "googleapis.com"
+                },
+                servers: ["1.1.1.1"]
+            },
+            inbounds: [
+                {
+                    listen: "127.0.0.1",
+                    port: 10808,
+                    protocol: "socks",
+                    settings: {
+                        auth: "noauth",
+                        udp: true,
+                        userLevel: 8
+                    },
+                    sniffing: {
+                        destOverride: ["http", "tls"],
+                        enabled: true
+                    },
+                    tag: "socks"
+                },
+                {
+                    listen: "127.0.0.1",
+                    port: 10809,
+                    protocol: "http",
+                    settings: {
+                        userLevel: 8
+                    },
+                    tag: "http"
+                }
+            ],
+            log: {
+                loglevel: "warning"
+            },
+            outbounds: [
+                {
+                    mux: {
+                        concurrency: 8,
+                        enabled: false
+                    },
+                    protocol: "vless",
+                    settings: {
+                        vnext: [
+                            {
+                                address: address,
+                                port: port,
+                                users: [
+                                    {
+                                        encryption: searchParams.get("encryption"),
+                                        flow: "",
+                                        id: id,
+                                        level: 8,
+                                        security: "auto"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    streamSettings: {
+                        network: searchParams.get("type"),
+                        security: searchParams.get("security"),
+                        tlsSettings: {
+                            allowInsecure: false,
+                            alpn: [searchParams.get("alpn")],
+                            fingerprint: searchParams.get("fp"),
+                            publicKey: "",
+                            serverName: searchParams.get("sni"),
+                            shortId: "",
+                            show: false,
+                            spiderX: ""
+                        },
+                        wsSettings: {
+                            headers: {
+                                Host: searchParams.get("host")
+                            },
+                            path: searchParams.get("path")
+                        }
+                    },
+                    proxySettings: {
+                        tag: "fragment",
+                        transportLayer: true
+                    },
+                    tag: "proxy"
+                },
+                {
+                    protocol: "freedom",
+                    settings: {},
+                    tag: "direct"
+                },
+                {
+                    protocol: "freedom",
+                    tag: "fragment",
+                    domainStrategy: "UseIP",
+                    sniffing: {
+                        enabled: true,
+                        destOverride: ["http", "tls"]
+                    },
+                    settings: {
+                        fragment: {
+                            packets: "tlshello",
+                            length: "200-500",
+                            interval: "10-20"
+                        }
+                    },
+                    streamSettings: {
+                        sockopt: {
+                            tcpNoDelay: true,
+                            domainStrategy: "UseIP"
+                        }
+                    }
+                },
+                {
+                    protocol: "blackhole",
+                    settings: {
+                        response: {
+                            type: "http"
+                        }
+                    },
+                    tag: "block"
+                }
+            ],
+            routing: {
+                domainStrategy: "IPIfNonMatch",
+                rules: [
+                    {
+                        ip: ["1.1.1.1"],
+                        outboundTag: "proxy",
+                        port: "53",
+                        type: "field"
+                    }
+                ]
+            }
+        };
 
         document.getElementById('output').textContent = JSON.stringify(output, null, 4);
         document.getElementById('copyButton').style.display = 'block';
